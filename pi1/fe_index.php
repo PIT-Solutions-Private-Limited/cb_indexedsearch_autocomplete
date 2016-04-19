@@ -3,10 +3,10 @@
 if (!defined ('PATH_typo3conf')) 	die ('Could not access this script directly!');
 
 // Exit if user tries to fiddle with the values ;-)
-if(!(t3lib_div::_GET('sr') < 1 || t3lib_div::_GET('sh') == t3lib_div::md5int(t3lib_div::_GET('sr') . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']))) {
+if(!(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sr') < 1 || \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sh') == \TYPO3\CMS\Core\Utility\GeneralUtility::md5int(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sr') . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']))) {
 	die('thx but no thx');
 }
-$obj = t3lib_div::makeInstance('tx_cb_indexedsearch_autocomplete_fe_index');
+$obj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_cb_indexedsearch_autocomplete_fe_index');
 $obj->look_up();
 
 // No need to waste more time here :-]
@@ -25,26 +25,27 @@ class tx_cb_indexedsearch_autocomplete_fe_index {
 		//require_once(PATH_t3lib.'class.t3lib_page.php');
 		
 		// Initialize FE user object:
-		$this->feUserObj = tslib_eidtools::initFeUser();
+		//$this->feUserObj = tslib_eidtools::initFeUser();
 		
 		// Connect to database:
-		tslib_eidtools::connectDB();
+		//tslib_eidtools::connectDB();
 		
-		$this->pages = array(intval(t3lib_div::_GET('sr')));
+		$this->pages = array(intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sr')));
 
 		// hook for showing extension version
-		if( intval(t3lib_div::_GET('sv')) > 0 ) {
+		if( intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sv')) > 0 ) {
 			$_EXTKEY = "temp";
 			require_once($GLOBALS['TYPO3_LOADED_EXT']['cb_indexedsearch_autocomplete']['siteRelPath'] . 'ext_emconf.php');
+			//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'ext_emconf.php';
 			die($EM_CONF[$_EXTKEY]['version']);
 		}
 		
 		// Setup enablefields def
-		tslib_fe::includeTCA();
-		$GLOBALS['TSFE']->gr_list = $this->feUserObj->user['usergroup'];
-		$this->pageSelect = t3lib_div::makeInstance('t3lib_pageSelect');
-		$this->enableFields = $this->pageSelect->enableFields('pages');
-		$this->multipleGroupsWhereClause = $this->pageSelect->getMultipleGroupsWhereClause('gr_list', 'index_phash');
+		//tslib_fe::includeTCA();
+		//$GLOBALS['TSFE']->gr_list = $this->feUserObj->user['usergroup'];
+		//$this->pageSelect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\Page\PageRepository');
+		//$this->enableFields = $this->pageSelect->enableFields('pages');
+		//$this->multipleGroupsWhereClause = $this->pageSelect->getMultipleGroupsWhereClause('gr_list', 'index_phash');
 
 		return true;
 	}
@@ -82,9 +83,9 @@ class tx_cb_indexedsearch_autocomplete_fe_index {
 	* Look up the words and print them
 	*/
 	function look_up() {		
-		$ll = t3lib_div::_GET( 'll' );
+		$ll = \TYPO3\CMS\Core\Utility\GeneralUtility::_GET( 'll' );
 		$language = ( !empty( $ll ) ) ? intval( $ll ) : 0;
-		$the_word_array = t3lib_div::trimExplode(' ', t3lib_div::_GET('sw'), 1);
+		$the_word_array = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(' ', \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sw'), 1);
 		$the_final_word_array = array();
 		$this->get_pages();
 				

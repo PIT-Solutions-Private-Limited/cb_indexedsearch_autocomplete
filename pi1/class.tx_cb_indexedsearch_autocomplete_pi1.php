@@ -55,8 +55,8 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 		$autoSubmit = intval($GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['autoSubmit']);
 
 		// Which jQuery library should be loaded?
-		$jQueryFile = ( $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] ) ? $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] : t3lib_extMgm::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.js';
-
+		$jQueryFile = ( $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] ) ? $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] : \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.js';
+		
 		// Is jQuery already loaded externally?
 		$jQueryLoadedExternally = intval($GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryLoadedExternally']);
 
@@ -64,8 +64,8 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 		$cssLoadedExternally = intval($GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['cssLoadedExternally']);
 
 		// Supprt extension t3query for jQuery loadage
-		if (t3lib_extMgm::isLoaded('t3jquery')){
-			require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')){
+			require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery').'class.tx_t3jquery.php');
 			//\TYPO3\CMS\Core\Utility\GeneralManagementUtility: conversion to extbase
 			//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('foo');
 		}
@@ -99,7 +99,7 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 
 			// Include CSS
 			if (!$cssLoadedExternally) {
-				$head .= "\n" . '<link rel="stylesheet" type="text/css" href="' . t3lib_extMgm::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.css" />';
+				$head .= "\n" . '<link rel="stylesheet" type="text/css" href="' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.css" />';
 				//returns the relative path to the css file
 				//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('your_ext_key') . 'Relative/Path/Of/Your/External/Library/';
 			}
@@ -110,7 +110,7 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 			if ($noConflictMethod > 0) {
 				$head .= "	jQuery.noConflict();\n";
 			}
-			$head .= 'var ll='.intval($GLOBALS['TSFE']->sys_language_uid) . ';var sr=' . intval($GLOBALS['TSFE']->config['rootLine'][0]['uid']) . ';var sh="' . t3lib_div::md5int($GLOBALS['TSFE']->config['rootLine'][0]['uid'] . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '";' . "\n";
+			$head .= 'var ll='.intval($GLOBALS['TSFE']->sys_language_uid) . ';var sr=' . intval($GLOBALS['TSFE']->config['rootLine'][0]['uid']) . ';var sh="' . \TYPO3\CMS\Core\Utility\GeneralUtility::md5int($GLOBALS['TSFE']->config['rootLine'][0]['uid'] . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . '";' . "\n";
 			$head .= "	var cb_indexsearch_autocomplete = {\n";
 			$head .= "		altResultLabel: '$altResultLabel',\n";
 			$head .= "		altResultsLabel: '$altResultsLabel',\n";
