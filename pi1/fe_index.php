@@ -19,16 +19,6 @@ class tx_cb_indexedsearch_autocomplete_fe_index {
 	* Do the setup bit
 	*/
 	function tx_cb_indexedsearch_autocomplete_fe_index() {
-
-		
-		// include class def
-		//require_once(PATH_t3lib.'class.t3lib_page.php');
-		
-		// Initialize FE user object:
-		//$this->feUserObj = tslib_eidtools::initFeUser();
-		
-		// Connect to database:
-		//tslib_eidtools::connectDB();
 		
 		$this->pages = array(intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sr')));
 
@@ -36,17 +26,9 @@ class tx_cb_indexedsearch_autocomplete_fe_index {
 		if( intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('sv')) > 0 ) {
 			$_EXTKEY = "temp";
 			require_once($GLOBALS['TYPO3_LOADED_EXT']['cb_indexedsearch_autocomplete']['siteRelPath'] . 'ext_emconf.php');
-			//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'ext_emconf.php';
 			die($EM_CONF[$_EXTKEY]['version']);
 		}
 		
-		// Setup enablefields def
-		//tslib_fe::includeTCA();
-		//$GLOBALS['TSFE']->gr_list = $this->feUserObj->user['usergroup'];
-		//$this->pageSelect = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Frontend\Page\PageRepository');
-		//$this->enableFields = $this->pageSelect->enableFields('pages');
-		//$this->multipleGroupsWhereClause = $this->pageSelect->getMultipleGroupsWhereClause('gr_list', 'index_phash');
-
 		return true;
 	}
 

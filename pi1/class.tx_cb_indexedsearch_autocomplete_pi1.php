@@ -54,8 +54,9 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 		// Should we auto-submit the search form?
 		$autoSubmit = intval($GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['autoSubmit']);
 
-		// Which jQuery library should be loaded?
-		$jQueryFile = ( $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] ) ? $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] : \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.js';
+		// jQueryFile is loaded?
+		$jQueryFile = ( $GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryFile'] );
+
 		
 		// Is jQuery already loaded externally?
 		$jQueryLoadedExternally = intval($GLOBALS['TSFE']->tmpl->setup['plugin.'][$this->key . '.']['jQueryLoadedExternally']);
@@ -66,8 +67,6 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 		// Supprt extension t3query for jQuery loadage
 		if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')){
 			require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery').'class.tx_t3jquery.php');
-			//\TYPO3\CMS\Core\Utility\GeneralManagementUtility: conversion to extbase
-			//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('foo');
 		}
 
 		// Should we limit the result to a number of suggestions?
@@ -101,7 +100,6 @@ class tx_cb_indexedsearch_autocomplete_pi1 {
 			if (!$cssLoadedExternally) {
 				$head .= "\n" . '<link rel="stylesheet" type="text/css" href="' . \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->key) . 'res/cb_indexedsearch_autocomplete.css" />';
 				//returns the relative path to the css file
-				//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('your_ext_key') . 'Relative/Path/Of/Your/External/Library/';
 			}
 			
 
